@@ -13,8 +13,31 @@ const config: Config = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+      fontFamily: {
+        'shizuru': ['Shizuru', 'system-ui'],
+      },
+      animation: {
+        'fade-in': 'fadeIn 1s ease-out forwards',
+      },
+      keyframes: {
+        fadeIn: {
+          '0%': { opacity: 0 },
+          '100%': { opacity: 1 },
+        },
+      },
     },
   },
-  plugins: [],
+  plugins: [
+    function ({ addBase, addComponents, addUtilities }) {
+      addBase({
+        '.shizuru-regular': {
+          fontFamily: 'Shizuru, system-ui',
+          fontWeight: '400',
+          fontStyle: 'normal',
+        },
+      });
+    },
+  ],
 };
+
 export default config;
