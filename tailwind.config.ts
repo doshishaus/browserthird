@@ -19,25 +19,8 @@ const config: Config = {
       animation: {
         'fade-in': 'fadeIn 1s ease-out forwards',
       },
-      keyframes: {
-        fadeIn: {
-          '0%': { opacity: 0 },
-          '100%': { opacity: 1 },
-        },
-      },
     },
   },
-  plugins: [
-    function ({ addBase, addComponents, addUtilities }) {
-      addBase({
-        '.shizuru-regular': {
-          fontFamily: 'Shizuru, system-ui',
-          fontWeight: '400',
-          fontStyle: 'normal',
-        },
-      });
-    },
-  ],
 };
 
 export default config;
