@@ -19,6 +19,9 @@ interface Sake {
   matchDrinkingSceneAndTarget: string;
   description: string;
 }
+interface BottlesMapping {
+  [key: string]: string;
+}
 
 const fetchCSVData = async (): Promise<Prefecture[]> => {
   try {
@@ -28,9 +31,9 @@ const fetchCSVData = async (): Promise<Prefecture[]> => {
     }
     const csvText = await response.text();
     return new Promise((resolve, reject) => {
-      Papa.parse(csvText, {
+      Papa.parse<Prefecture>(csvText, {
         header: true,
-        complete: (results) => {
+        complete: (results: Papa.ParseResult<Prefecture>) => {
           if (results.errors.length) {
             console.error('CSVのパースエラー:', results.errors);
             reject(results.errors);
@@ -50,6 +53,7 @@ const fetchCSVData = async (): Promise<Prefecture[]> => {
     throw error;
   }
 };
+
 
 
 const fetchBottlesData = async () => {
@@ -84,11 +88,12 @@ const fetchSakeData = async (filePath: string): Promise<Sake[]> => {
 
 const SakePage = () => {
   const [prefectureRanking, setPrefectureRanking] = useState<Prefecture[]>([]);
-  const [bottlesMapping, setBottlesMapping] = useState({});
+  const [bottlesMapping, setBottlesMapping] = useState<BottlesMapping>({});
   const [selectedPrefecture, setSelectedPrefecture] = useState<string | null>(null);
   const [filteredSake, setFilteredSake] = useState<Sake[]>([]);
   const [selectedSake, setSelectedSake] = useState<Sake | null>(null);
   const [isAnimating, setIsAnimating] = useState(false);
+  
   const [animationOrigin, setAnimationOrigin] = useState({ top: '50%', left: '50%' });
   const [closeAnimation, setCloseAnimation] = useState(false);
   const router = useRouter();
@@ -166,8 +171,8 @@ const SakePage = () => {
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
-    nextArrow: <SampleNextArrow />,
-    prevArrow: <SamplePrevArrow />,
+    nextArrow: <SampleNextArrow className={undefined} style={undefined} onClick={undefined} />,
+    prevArrow: <SamplePrevArrow className={undefined} style={undefined} onClick={undefined} />,
     responsive: [
       {
         breakpoint: 1024,
@@ -189,7 +194,7 @@ const SakePage = () => {
   };
 
   // カスタム矢印コンポーネント
-  function SampleNextArrow(props) {
+  function SampleNextArrow(props: { className: any; style: any; onClick: any; }) {
     const { className, style, onClick } = props;
     return (
       <div
@@ -202,7 +207,7 @@ const SakePage = () => {
     );
   }
 
-  function SamplePrevArrow(props) {
+  function SamplePrevArrow(props: { className: any; style: any; onClick: any; }) {
     const { className, style, onClick } = props;
     return (
       <div

@@ -10,7 +10,7 @@ export async function parseCSV(filePath: string) {
             complete: (results) => {
                 resolve(results.data);
             },
-            error: (error) => {
+            error: (error: any) => {
                 reject(error);
             }
         });
