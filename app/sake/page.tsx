@@ -39,7 +39,7 @@ const fetchCSVData = async (): Promise<Prefecture[]> => {
             resolve(results.data);
           }
         },
-        error: (error) => {
+        error: (error: Error) => { // 型を指定
           console.error('CSVのパース中のエラー:', error); // エラーログ
           reject(error);
         }
@@ -50,6 +50,7 @@ const fetchCSVData = async (): Promise<Prefecture[]> => {
     throw error;
   }
 };
+
 
 const fetchBottlesData = async () => {
   try {
